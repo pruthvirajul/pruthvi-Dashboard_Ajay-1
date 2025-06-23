@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  dashboard:
+    build: ./Frontend/dashboard
+    ports:
+      - "8081:80"
+    depends_on:
+      - backend
+
+  forgot:
+    build: ./Frontend/forgot
+    ports:
+      - "8082:80"
+    depends_on:
+      - backend
+
+  login:
+    build: ./Frontend/login
+    ports:
+      - "8083:80"
+    depends_on:
+      - backend
+
+  signup:
+    build: ./Frontend/signup
+    ports:
+      - "8084:80"
+    depends_on:
+      - backend
+
+  backend:
+    build: ./Backend
+    ports:
+      - "3089:3089"
+    environment:
+      DB_USER: postgres
+      DB_PASSWORD: admin321
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: new_employee_db
+      NODE_ENV: development
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:13
+    restart: always
+    ports:
+      - "5065:5432"
+    environment:
+      POSTGRES_DB: new_employee_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin321
+
